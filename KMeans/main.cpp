@@ -6,17 +6,22 @@
 
 using namespace std;
 
-#include "cP.h"
+#include "cRow.h"
 #include "KMeans.h"
 
-int main( int arc, char* argv[] )
+int main( int argc, char* argv[] )
 {
+    if( argc != 3 ) {
+        std::cout << "Usage: KMeans <data dimension> <data file path>\n";
+        exit(1);
+    }
+    int datadim = atoi( argv[1] );
     KMeans KM;
-    vector< cP > Clusters;
-    ifstream f( argv[1]);
+    vector< cRow > Clusters;
+    ifstream f( argv[2]);
     if( ! f.is_open() )
         cout << "cannot open " <<  argv[1] << "\n";
-    cP l;
+    cRow l(datadim);
     string line;
     while( getline( f, line ) )
     {
@@ -27,9 +32,8 @@ int main( int arc, char* argv[] )
             output.push_back(a);
         if( ! output.size() )
             continue;
-        l.x = atof(output[0].c_str());
-        l.y = atof(output[1].c_str());
-        l.z = atof(output[2].c_str());
+        for( int k = 0; k < datadim; k++ )
+            l.d[k] = atof(output[k].c_str());
         //cout << "saving " << l.Text() << "\n";
         KM.Add( l );
     }

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "cP.h"
+#include "cRow.h"
 #include "KMeans.h"
 
 double KMeans::TotalDistanceToCluster()
@@ -60,7 +60,7 @@ void KMeans::MoveClustersToMean()
 {
     for( int ks = 0; ks < myClusterCount; ks++ )
     {
-        cP A;
+        cRow A;
         int count = 0;
         for( int kc = 0; kc < (int)myLocations.size(); kc++ )
         {

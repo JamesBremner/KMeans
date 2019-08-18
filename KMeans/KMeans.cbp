@@ -35,7 +35,7 @@
 		</Compiler>
 		<Unit filename="KMeans.cpp" />
 		<Unit filename="KMeans.h" />
-		<Unit filename="cP.h" />
+		<Unit filename="cRow.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

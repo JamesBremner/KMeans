@@ -6,7 +6,7 @@ class KMeans
 {
 public:
     /// Add a data location
-    void Add( cP& p )
+    void Add( cRow& p )
     {
         myLocations.push_back( p );
     }
@@ -30,9 +30,9 @@ public:
     std::string AssignText();
 
 private:
-    vector< cP > myLocations;       // locations of data
+    vector< cRow > myLocations;       // locations of data
     int myClusterCount;
-    vector< cP > myClusters;         // cluster centers
+    vector< cRow > myClusters;         // cluster centers
     vector< int > myAssigns;        // cluster indices locations assigned to
 };
 
