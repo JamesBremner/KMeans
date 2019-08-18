@@ -29,6 +29,8 @@ public:
     /// Text showing location assignemnts to clusters
     std::string AssignText();
 
+    std::string ClusterStats( int cluster );
+
 private:
     vector< cRow > myLocations;       // locations of data
     int myClusterCount;

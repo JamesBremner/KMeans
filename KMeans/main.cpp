@@ -48,5 +48,10 @@ int main( int argc, char* argv[] )
         std::cout << "Total distance " << KM.TotalDistanceToCluster() << "\n";
     }
 
+    for( int k = 0; k < atoi( argv[3] ); k++ )
+    {
+        cout << KM.ClusterStats( k ) << "\n";
+    }
+
     return 0;
 }

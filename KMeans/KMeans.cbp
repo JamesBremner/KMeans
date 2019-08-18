@@ -32,6 +32,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="$(#boost.include)" />
 		</Compiler>
 		<Unit filename="KMeans.cpp" />
 		<Unit filename="KMeans.h" />
