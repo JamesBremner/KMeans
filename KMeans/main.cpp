@@ -11,8 +11,8 @@ using namespace std;
 
 int main( int argc, char* argv[] )
 {
-    if( argc != 3 ) {
-        std::cout << "Usage: KMeans <data dimension> <data file path>\n";
+    if( argc != 4 ) {
+        std::cout << "Usage: KMeans <data dimension> <data file path> <number of clusters>\n";
         exit(1);
     }
     int datadim = atoi( argv[1] );
@@ -38,7 +38,7 @@ int main( int argc, char* argv[] )
         KM.Add( l );
     }
 
-    KM.ClusterCount( 3 );
+    KM.ClusterCount( atoi( argv[3] ) );
 
     for( int kiter=0; kiter < 10; kiter++ )
     {
