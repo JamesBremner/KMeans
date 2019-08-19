@@ -18,16 +18,14 @@ The iris data set ( http://archive.ics.uci.edu/ml/datasets/Iris ) has 4 attribut
 The application outputs
 
 ```
-n>KMeans.exe 4 ..\data\bezdekIris.data 4
-cluster 0 has 35 cluster 1 has 16 cluster 2 has 56 cluster 3 has 43 Total distance 90.4518
-cluster 0 has 29 cluster 1 has 21 cluster 2 has 59 cluster 3 has 41 Total distance 84.225
-cluster 0 has 28 cluster 1 has 22 cluster 2 has 59 cluster 3 has 41 Total distance 83.7341
+>KMeans.exe 4 ..\data\bezdekIris.data 3
+0 5.1 3.5 1.4 0.2 , 50 7 3.2 4.7 1.4 , 100 6.3 3.3 6 2.5 , Total distance 103.982
+Total distance 97.249
+Total distance 97.2046
 
-Cluster 0 means 5.24286 3.66786 1.5  mins: 4.9, 3.3, 1.2, 0.1,  maxs: 5.8, 4.4, 1.9, 0.6,  sds: 0.236686, 0.269991, 0.148805, 0.119683,
+Cluster 0 means 5.006 3.428 1.462 0.246  mins: 4.3, 2.3, 1, 0.1,  maxs: 5.8, 4.4, 1.9, 0.6,  sds: 0.348947, 0.375255, 0.171919, 0.104326,
 
-Cluster 1 means 4.70455 3.12273 1.41364  mins: 4.3, 2.3, 1, 0.1,  maxs: 5, 3.6, 1.9, 0.3,  sds: 0.207753, 0.246672, 0.186585, 0.0522233,
+Cluster 1 means 5.90161 2.74839 4.39355 1.43387  mins: 4.9, 2, 3, 1,  maxs: 7, 3.4, 5.1, 2.4,  sds: 0.462633, 0.293885, 0.504774, 0.295091,
 
-Cluster 2 means 5.86102 2.73898 4.36949  mins: 4.9, 2, 3, 1,  maxs: 6.7, 3.4, 5.1, 2.4,  sds: 0.431794, 0.295168, 0.504305, 0.302313,
-
-Cluster 3 means 6.83902 3.06341 5.67805  mins: 6.1, 2.5, 4.7, 1.4,  maxs: 7.9, 3.8, 6.9, 2.5,  sds: 0.477738, 0.282632, 0.519151, 0.313735,
+Cluster 2 means 6.85 3.07368 5.74211 2.07105  mins: 6.1, 2.5, 4.9, 1.4,  maxs: 7.9, 3.8, 6.9, 2.5,  sds: 0.48761, 0.28625, 0.482118, 0.276165,
 ```
