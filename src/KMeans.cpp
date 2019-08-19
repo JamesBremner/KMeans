@@ -38,7 +38,7 @@ std::string KMeans::AssignText()
     stringstream ss;
     for( int k = 0; k < (int)myLocations.size(); k++ )
         ss << k << " ( " << myLocations[k].Text()
-           << " ) in " << myAssigns[k] <<" ( "
+           << " ) in cluster " << myAssigns[k] <<" ( "
            <<  myClusters[ myAssigns[k] ].Text() <<" )\n";
     return ss.str();
 }
@@ -67,17 +67,17 @@ void KMeans::MoveClustersToMean()
 {
     for( int ks = 0; ks < myClusterCount; ks++ )
     {
-        cRow A;
+        cRow A( myLocations[0].myDim );
         int count = 0;
-        for( int kc = 0; kc < (int)myLocations.size(); kc++ )
+        for( int kl = 0; kl < (int)myLocations.size(); kl++ )
         {
-            if( ks == myAssigns[ kc ] )
+            if( ks == myAssigns[ kl ] )
             {
-                A = A + myLocations[ kc ];
+                A = A + myLocations[ kl ];
                 count++;
             }
         }
-        cout << "cluster " << ks << " has "<< count << " ";
+        //cout << "cluster " << ks << " has "<< count << " " << A.Text() << "\n";
         if( count )
             myClusters[ ks ] = A / count;
     }
@@ -95,7 +95,7 @@ void KMeans::ClusterCount( int c )
     for( int k = 0; k < myClusterCount; k++ )
     {
         int ic = k * (double)myLocations.size()/myClusterCount;
-        //cout << ic <<" "<< myLocations[ic].Text() << ", ";
+        cout << ic <<" "<< myLocations[ic].Text() << ", ";
         myClusters.push_back( myLocations[ic] );
     }
 }

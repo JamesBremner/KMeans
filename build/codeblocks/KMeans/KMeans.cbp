@@ -32,11 +32,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="../../../src" />
 			<Add directory="$(#boost.include)" />
 		</Compiler>
-		<Unit filename="KMeans.cpp" />
-		<Unit filename="KMeans.h" />
-		<Unit filename="cRow.h" />
+		<Unit filename="../../../src/KMeans.cpp" />
+		<Unit filename="../../../src/KMeans.h" />
+		<Unit filename="../../../src/cRow.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

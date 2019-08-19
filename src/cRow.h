@@ -1,3 +1,6 @@
+#pragma once
+#include <sstream>
+#include <cmath>
 #include <algorithm>
 
 /// Data row
@@ -10,7 +13,13 @@ struct cRow
         @param[in] dim number of dimensions ( columns ) in the data, default 3
     */
     cRow( int dim = 3 ) : myDim( dim ), d(dim) {}
+
+    /** CTOR
+        @param[in] vd vector of values
+        The dimensionality will be set to the length of vd
+    */
     cRow(const std::vector< double >& vd )
+    : cRow( vd.size() )
     {
         for( int k = 0; k < myDim; k++ )
             d[k] = vd[k];
@@ -38,7 +47,7 @@ struct cRow
     }
     cRow operator / ( double s )
     {
-        if( fabs(s) < 0.00000001 )
+        if( std::fabs(s) < 0.00000001 )
             throw std::runtime_error("cRow divide by zero");
 
         cRow r( myDim );
@@ -63,9 +72,9 @@ struct cRow
             return 0;
         } );
 
-        return sqrt( t );
+        return std::sqrt( t );
     }
-    double sum_all_distances( const vector<cRow>& locs )
+    double sum_all_distances( const std::vector<cRow>& locs )
     {
         double total = 0;
         for( auto& l : locs )
@@ -74,9 +83,9 @@ struct cRow
         }
         return total;
     }
-    string Text() const
+    std::string Text() const
     {
-        stringstream ss;
+        std::stringstream ss;
         for( int k = 0; k < myDim; k++ )
             ss << d[k] << " ";
         return ss.str();

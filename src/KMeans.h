@@ -1,3 +1,6 @@
+#include <vector>
+
+#include "cRow.h"
 
 /** Locate clusters using K-Means algorithm
  https://en.wikipedia.org/wiki/K-means_clustering
@@ -6,7 +9,7 @@ class KMeans
 {
 public:
     /// Add a data location
-    void Add( cRow& p )
+    void Add( const cRow& p )
     {
         myLocations.push_back( p );
     }
@@ -32,9 +35,9 @@ public:
     std::string ClusterStats( int cluster );
 
 private:
-    vector< cRow > myLocations;       // locations of data
+    std::vector< cRow > myLocations;       // locations of data
     int myClusterCount;
-    vector< cRow > myClusters;         // cluster centers
-    vector< int > myAssigns;        // cluster indices locations assigned to
+    std::vector< cRow > myClusters;         // cluster centers
+    std::vector< int > myAssigns;        // cluster indices locations assigned to
 };
 
