@@ -18,6 +18,16 @@ using namespace std;
 #include "cRow.h"
 #include "KMeans.h"
 
+void KMeans::Add( const cRow& p )
+{
+    if( myLocations.size() ) {
+        if( myLocations[0].myDim != p.myDim ) {
+            throw std::runtime_error("Inconsistent data attribute count");
+        }
+    }
+    myLocations.push_back( p );
+}
+
 double KMeans::TotalDistanceToCluster()
 {
     double total = 0;

@@ -9,10 +9,7 @@ class KMeans
 {
 public:
     /// Add a data location
-    void Add( const cRow& p )
-    {
-        myLocations.push_back( p );
-    }
+    void Add( const cRow& p );
 
     /** initialize
         @param[in] clusterCount number of clusters expected
