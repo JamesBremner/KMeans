@@ -38,7 +38,7 @@ int main( int argc, char* argv[] )
         KM.Add( l );
     }
 
-    KM.ClusterCount( atoi( argv[3] ) );
+    KM.Init( atoi( argv[3] ), true );
 
     for( int kiter=0; kiter < 10; kiter++ )
     {

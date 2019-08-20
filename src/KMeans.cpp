@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 
 #include <boost/accumulators/accumulators.hpp>
 #include <boost/accumulators/statistics/stats.hpp>
@@ -83,14 +85,22 @@ void KMeans::MoveClustersToMean()
     }
 }
 
-void KMeans::ClusterCount( int c )
+void KMeans::Init(
+    int clusterCount,
+    bool frandom )
 {
-    myClusterCount = c;
+    myClusterCount = clusterCount;
 
     if( myClusterCount > (int)myLocations.size() )
         throw std::runtime_error("KMeans::ClusterCount less locations than clusters");
 
-    // initialize cluster locations among data locations by index
+    if( frandom )
+        ClusterLocationInitRandom();
+    else
+        ClusterLocationInitIndex();
+}
+void KMeans::ClusterLocationInitIndex()
+{
     myClusters.clear();
     for( int k = 0; k < myClusterCount; k++ )
     {
@@ -99,6 +109,17 @@ void KMeans::ClusterCount( int c )
         myClusters.push_back( myLocations[ic] );
     }
 }
+void KMeans::ClusterLocationInitRandom()
+{
+    /* initialize random seed: */
+    srand (time(NULL));
+    myClusters.clear();
+    for( int k = 0; k < myClusterCount; k++ )
+    {
+        myClusters.push_back( myLocations[ rand() % myLocations.size() ] );
+    }
+}
+
 
 void KMeans::Iter( int max )
 {

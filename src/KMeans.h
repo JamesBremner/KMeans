@@ -14,8 +14,13 @@ public:
         myLocations.push_back( p );
     }
 
-    /// Set mumber of clusters expected and initialize
-    void ClusterCount( int c );
+    /** initialize
+        @param[in] clusterCount number of clusters expected
+        @parsm[in] frandom true if random initial cluster locations, default false
+    */
+    void Init(
+              int clusterCount,
+              bool frandom = false );
 
     /// Assign locations to nearest cluster
     void Assign();
@@ -39,5 +44,8 @@ private:
     int myClusterCount;
     std::vector< cRow > myClusters;         // cluster centers
     std::vector< int > myAssigns;        // cluster indices locations assigned to
+
+    void ClusterLocationInitIndex();
+    void ClusterLocationInitRandom();
 };
 
