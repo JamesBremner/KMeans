@@ -34,8 +34,10 @@
 			<Add directory="../../../src" />
 			<Add directory="$(#boost.include)" />
 		</Compiler>
+		<Unit filename="../../../src/CrossCorrelation.h" />
 		<Unit filename="../../../src/KMeans.cpp" />
 		<Unit filename="../../../src/KMeans.h" />
+		<Unit filename="../../../src/LinearRegression.h" />
 		<Unit filename="../../../src/cRow.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
