@@ -29,3 +29,29 @@ Cluster 1 means 5.90161 2.74839 4.39355 1.43387  mins: 4.9, 2, 3, 1,  maxs: 7, 3
 
 Cluster 2 means 6.85 3.07368 5.74211 2.07105  mins: 6.1, 2.5, 4.9, 1.4,  maxs: 7.9, 3.8, 6.9, 2.5,  sds: 0.48761, 0.28625, 0.482118, 0.276165,
 ```
+# Linear Regression
+
+In src/LinearRegression.h
+
+```
+/** Linear Regression
+    @param[in] x indepedant variable values
+    @param[in] y dependent variable values
+    @return pair< intercept, slope >
+    Usage:
+    auto r = regression( x, y );
+    y = r.first + r.second * x;
+*/
+```
+
+# Correlation
+
+In src/CrossCorrelation.h
+
+```
+/** correlation coefficient.
+    @param[in] X
+    @param[in] Y
+    @return correlation between X nd Y
+*/
+```
