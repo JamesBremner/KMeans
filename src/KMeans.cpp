@@ -68,10 +68,12 @@ void KMeans::Assign()
     myAssigns.clear();
     for( auto& cl : myLocations )
     {
+        //cout << "assigning " << cl.Text() << "\n";
         double m = 1000000000000000000000.0;
         int sg;
         for( int si = 0; si < myClusterCount; si++ )
         {
+            //cout << "test cluster " << myClusters[ si ].text() << "\n";
             double td = myClusters[ si ].dist( cl );
             if( td < m )
             {
@@ -123,7 +125,7 @@ void KMeans::ClusterLocationInitIndex()
     for( int k = 0; k < myClusterCount; k++ )
     {
         int ic = k * (double)myLocations.size()/myClusterCount;
-        cout << ic <<" "<< myLocations[ic].Text() << ", ";
+        //cout << ic <<" "<< myLocations[ic].Text() << ", ";
         myClusters.push_back( cCluster( myLocations[ic] ) );
     }
 }
@@ -206,9 +208,9 @@ std::string KMeans::ClusterStats( int cluster )
     return ss.str();
 }
 
-double cCluster::dist( const cRow& o )
+double cCluster::dist( cRow& o )
 {
-    return myCenter.dist( o );
+    return ::dist( myCenter, o );
 }
 std::string cCluster::text() const
 {
@@ -222,4 +224,16 @@ cCluster::cCluster( const cRow& r )
 {
     myCenter = r;
 }
+
+double cRow::sum_all_distances( std::vector<cRow>& locs )
+{
+    double total = 0;
+    for( auto& l : locs )
+    {
+        total += dist( *this, l );
+    }
+    return total;
+}
+
+
 

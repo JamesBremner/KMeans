@@ -2,11 +2,13 @@
 
 #include "cRow.h"
 
+
+
 class cCluster
 {
 public:
     cCluster( const cRow& r );
-    double dist( const cRow& o );
+    double dist( cRow& o );
     std::string text() const;
     void move( const cRow& r );
 private:

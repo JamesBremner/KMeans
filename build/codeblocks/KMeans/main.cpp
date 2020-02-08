@@ -41,7 +41,7 @@ int main( int argc, char* argv[] )
         KM.Add( l );
     }
 
-    KM.Init( atoi( argv[3] ), true );
+    KM.Init( atoi( argv[3] ), false );
 
     for( int kiter=0; kiter < 10; kiter++ )
     {

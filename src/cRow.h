@@ -2,6 +2,7 @@
 #include <sstream>
 #include <cmath>
 #include <algorithm>
+#include <vector>
 
 /// Data row with variable number of columns
 struct cRow
@@ -67,37 +68,13 @@ struct cRow
 
     }
 
-    /// Pythagonal distance to another row.
-    double dist( const cRow& o )
-    {
-        //cout << "dist " << Text() << " " << o.Text() << "\n";
-        double t = 0;
-        cRow r( myDim );
-        std::transform(
-            d.begin(), d.end(), o.d.begin(), r.d.begin(),
-            [&t]( double a, double b)
-        {
-            double delta = a-b;
-            t += delta * delta;
-            return 0;
-        } );
 
-        return std::sqrt( t );
-    }
 
     /** Sum dirtance to other rows
         @param[in] locs the other rows
         @return total distance
     */
-    double sum_all_distances( const std::vector<cRow>& locs )
-    {
-        double total = 0;
-        for( auto& l : locs )
-        {
-            total += dist( l );
-        }
-        return total;
-    }
+    double sum_all_distances( std::vector<cRow>& locs );
 
     /// Human readable string to display data
     std::string Text() const
@@ -108,4 +85,8 @@ struct cRow
         return ss.str();
     }
 };
+
+/// Pythagonal distance between rows.
+double dist( const cRow& ra, const cRow& rb );
+
 
