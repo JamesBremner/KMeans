@@ -20,8 +20,10 @@ using namespace std;
 
 void KMeans::Add( const cRow& p )
 {
-    if( myLocations.size() ) {
-        if( myLocations[0].myDim != p.myDim ) {
+    if( myLocations.size() )
+    {
+        if( myLocations[0].myDim != p.myDim )
+        {
             throw std::runtime_error("Inconsistent data attribute count");
         }
     }
@@ -45,13 +47,19 @@ double KMeans::TotalDistanceToCluster()
     return total;
 }
 
-std::string KMeans::AssignText()
+std::string KMeans::text()
 {
     stringstream ss;
-    for( int k = 0; k < (int)myLocations.size(); k++ )
-        ss << k << " ( " << myLocations[k].Text()
-           << " ) in cluster " << myAssigns[k] <<" ( "
-           <<  myClusters[ myAssigns[k] ].Text() <<" )\n";
+    int kc = 0;
+    for( auto& c : myClusters )
+    {
+        ss << "Cluster " << kc << " : ";
+        for( int k = 0; k < (int)myLocations.size(); k++ )
+            if( myAssigns[k] == kc )
+                ss << myLocations[k].Text() << ", ";
+        ss << "\n" << ClusterStats( kc ) << "\n";
+        kc++;
+    }
     return ss.str();
 }
 
@@ -64,7 +72,7 @@ void KMeans::Assign()
         int sg;
         for( int si = 0; si < myClusterCount; si++ )
         {
-            double td = cl.dist( myClusters[ si ] );
+            double td = myClusters[ si ].dist( cl );
             if( td < m )
             {
                 m = td;
@@ -91,7 +99,7 @@ void KMeans::MoveClustersToMean()
         }
         //cout << "cluster " << ks << " has "<< count << " " << A.Text() << "\n";
         if( count )
-            myClusters[ ks ] = A / count;
+            myClusters[ ks ].move( A / count );
     }
 }
 
@@ -116,7 +124,7 @@ void KMeans::ClusterLocationInitIndex()
     {
         int ic = k * (double)myLocations.size()/myClusterCount;
         cout << ic <<" "<< myLocations[ic].Text() << ", ";
-        myClusters.push_back( myLocations[ic] );
+        myClusters.push_back( cCluster( myLocations[ic] ) );
     }
 }
 void KMeans::ClusterLocationInitRandom()
@@ -155,7 +163,7 @@ std::string KMeans::ClusterStats( int cluster )
     ss << "Cluster " << cluster << " means ";
     if( 0 > cluster || cluster > (int)myClusters.size())
         return ss.str();
-    ss << myClusters[ cluster ].Text();
+    ss << myClusters[ cluster ].text();
 
     typedef boost::accumulators::accumulator_set<double, boost::accumulators::stats<
     boost::accumulators::tag::min,
@@ -196,5 +204,22 @@ std::string KMeans::ClusterStats( int cluster )
     ss << "\n";
 
     return ss.str();
+}
+
+double cCluster::dist( const cRow& o )
+{
+    return myCenter.dist( o );
+}
+std::string cCluster::text() const
+{
+    return myCenter.Text();
+}
+void cCluster::move( const cRow& r )
+{
+    myCenter = r;
+}
+cCluster::cCluster( const cRow& r )
+{
+    myCenter = r;
 }
 

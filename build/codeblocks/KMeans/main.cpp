@@ -11,6 +11,7 @@ using namespace std;
 
 int main( int argc, char* argv[] )
 {
+    try {
     if( argc != 4 ) {
         std::cout << "Usage: KMeans <data dimension> <data file path> <number of clusters>\n";
         exit(1);
@@ -19,8 +20,10 @@ int main( int argc, char* argv[] )
     KMeans KM;
     vector< cRow > Clusters;
     ifstream f( argv[2]);
-    if( ! f.is_open() )
-        cout << "cannot open " <<  argv[1] << "\n";
+    if( ! f.is_open() ) {
+        cout << "cannot open " <<  argv[2] << "\n";
+        return 1;
+    }
     cRow l(datadim);
     string line;
     while( getline( f, line ) )
@@ -48,9 +51,12 @@ int main( int argc, char* argv[] )
         std::cout << "Total distance " << KM.TotalDistanceToCluster() << "\n";
     }
 
-    for( int k = 0; k < atoi( argv[3] ); k++ )
+    cout << KM.text();
+
+    }
+    catch( std::runtime_error& e )
     {
-        cout << KM.ClusterStats( k ) << "\n";
+        cout << e.what() << "\n";
     }
 
     return 0;
