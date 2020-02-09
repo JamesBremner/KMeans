@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "cRow.h"
+#include "cDataPoint.h"
 #include "KMeans.h"
 
 int main( int argc, char* argv[] )
@@ -18,13 +18,13 @@ int main( int argc, char* argv[] )
     }
     int datadim = atoi( argv[1] );
     KMeans KM;
-    vector< cRow > Clusters;
+    vector< cDataPoint > Clusters;
     ifstream f( argv[2]);
     if( ! f.is_open() ) {
         cout << "cannot open " <<  argv[2] << "\n";
         return 1;
     }
-    cRow l(datadim);
+    cDataPoint l(datadim);
     string line;
     while( getline( f, line ) )
     {

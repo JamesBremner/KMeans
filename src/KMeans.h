@@ -1,18 +1,18 @@
 #include <vector>
 
-#include "cRow.h"
+#include "cDataPoint.h"
 
 
 
 class cCluster
 {
 public:
-    cCluster( const cRow& r );
-    double dist( cRow& o );
+    cCluster( const cDataPoint& r );
+    double dist( cDataPoint& o );
     std::string text() const;
-    void move( const cRow& r );
+    void move( const cDataPoint& r );
 private:
-    cRow myCenter;
+    cDataPoint myCenter;
 };
 
 /** Locate clusters using K-Means algorithm
@@ -22,7 +22,7 @@ class KMeans
 {
 public:
     /// Add a data location
-    void Add( const cRow& p );
+    void Add( const cDataPoint& p );
 
     /** initialize
         @param[in] clusterCount number of clusters expected
@@ -50,7 +50,7 @@ public:
     std::string ClusterStats( int cluster );
 
 private:
-    std::vector< cRow > myLocations;       // locations of data
+    std::vector< cDataPoint > myLocations;       // locations of data
     int myClusterCount;
     std::vector< cCluster > myClusters;         // clusters
     std::vector< int > myAssigns;        // cluster indices locations assigned to

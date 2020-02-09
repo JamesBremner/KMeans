@@ -15,10 +15,10 @@
 
 using namespace std;
 
-#include "cRow.h"
+#include "cDataPoint.h"
 #include "KMeans.h"
 
-void KMeans::Add( const cRow& p )
+void KMeans::Add( const cDataPoint& p )
 {
     if( myLocations.size() )
     {
@@ -56,7 +56,7 @@ std::string KMeans::text()
         ss << "Cluster " << kc << " : ";
         for( int k = 0; k < (int)myLocations.size(); k++ )
             if( myAssigns[k] == kc )
-                ss << myLocations[k].Text() << ", ";
+                ss << myLocations[k].text() << ", ";
         ss << "\n" << ClusterStats( kc ) << "\n";
         kc++;
     }
@@ -89,7 +89,7 @@ void KMeans::MoveClustersToMean()
 {
     for( int ks = 0; ks < myClusterCount; ks++ )
     {
-        cRow A( myLocations[0].myDim );
+        cDataPoint A( myLocations[0].myDim );
         int count = 0;
         for( int kl = 0; kl < (int)myLocations.size(); kl++ )
         {
@@ -208,32 +208,23 @@ std::string KMeans::ClusterStats( int cluster )
     return ss.str();
 }
 
-double cCluster::dist( cRow& o )
+double cCluster::dist( cDataPoint& o )
 {
-    return ::dist( myCenter, o );
+    return cDataPoint::dist( myCenter, o );
 }
 std::string cCluster::text() const
 {
-    return myCenter.Text();
+    return myCenter.text();
 }
-void cCluster::move( const cRow& r )
+void cCluster::move( const cDataPoint& r )
 {
     myCenter = r;
 }
-cCluster::cCluster( const cRow& r )
+cCluster::cCluster( const cDataPoint& r )
 {
     myCenter = r;
 }
 
-double cRow::sum_all_distances( std::vector<cRow>& locs )
-{
-    double total = 0;
-    for( auto& l : locs )
-    {
-        total += dist( *this, l );
-    }
-    return total;
-}
 
 
 

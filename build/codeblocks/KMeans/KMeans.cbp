@@ -38,7 +38,8 @@
 		</Compiler>
 		<Unit filename="../../../src/KMeans.cpp" />
 		<Unit filename="../../../src/KMeans.h" />
-		<Unit filename="../../../src/cRow.h" />
+		<Unit filename="../../../src/cDataPoint.cpp" />
+		<Unit filename="../../../src/cDataPoint.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
