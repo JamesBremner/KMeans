@@ -29,6 +29,7 @@ class KMeans
 public:
     /// Add a data location
     void Add( const std::vector<double>& p );
+    void Add( cDataPoint& p );
 
     /** initialize
         @param[in] clusterCount number of clusters expected

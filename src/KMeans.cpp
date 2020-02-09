@@ -30,6 +30,11 @@ void KMeans::Add( const vector<double>& p )
     myLocations.push_back( dp_t( new cDataPoint( p ) ) );
 }
 
+    void KMeans::Add( cDataPoint& p )
+    {
+        Add( p.d );
+    }
+
 double KMeans::TotalDistanceToCluster()
 {
     double total = 0;
