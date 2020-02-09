@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 #include <vector>
+#include <memory>
 
 /// Data row with variable number of columns
 struct cDataPoint
@@ -49,8 +50,9 @@ struct cDataPoint
 
     /// Human readable string to display data
     std::string text() const;
-
 };
+
+typedef std::shared_ptr< cDataPoint > dp_t;
 
 
 

@@ -8,11 +8,17 @@ class cCluster
 {
 public:
     cCluster( const cDataPoint& r );
-    double dist( cDataPoint& o );
+    ~cCluster() {}
+    double dist( dp_t o );
     std::string text() const;
     void move( const cDataPoint& r );
+    void clear();
+    void add( dp_t p );
+    std::vector< dp_t >& points();
+    cDataPoint& center();
 private:
     cDataPoint myCenter;
+    std::vector< dp_t > myPoints;
 };
 
 /** Locate clusters using K-Means algorithm
@@ -22,7 +28,7 @@ class KMeans
 {
 public:
     /// Add a data location
-    void Add( const cDataPoint& p );
+    void Add( const std::vector<double>& p );
 
     /** initialize
         @param[in] clusterCount number of clusters expected
@@ -49,8 +55,13 @@ public:
 
     std::string ClusterStats( int cluster );
 
+    std::vector< cCluster >&
+    clusters();
+
+
+
 private:
-    std::vector< cDataPoint > myLocations;       // locations of data
+    std::vector< dp_t > myLocations;       // locations of data
     int myClusterCount;
     std::vector< cCluster > myClusters;         // clusters
     std::vector< int > myAssigns;        // cluster indices locations assigned to

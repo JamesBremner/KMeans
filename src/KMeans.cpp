@@ -18,16 +18,16 @@ using namespace std;
 #include "cDataPoint.h"
 #include "KMeans.h"
 
-void KMeans::Add( const cDataPoint& p )
+void KMeans::Add( const vector<double>& p )
 {
     if( myLocations.size() )
     {
-        if( myLocations[0].myDim != p.myDim )
+        if( myLocations[0]->myDim != p.size() )
         {
             throw std::runtime_error("Inconsistent data attribute count");
         }
     }
-    myLocations.push_back( p );
+    myLocations.push_back( dp_t( new cDataPoint( p ) ) );
 }
 
 double KMeans::TotalDistanceToCluster()
@@ -56,7 +56,7 @@ std::string KMeans::text()
         ss << "Cluster " << kc << " : ";
         for( int k = 0; k < (int)myLocations.size(); k++ )
             if( myAssigns[k] == kc )
-                ss << myLocations[k].text() << ", ";
+                ss << myLocations[k]->text() << ", ";
         ss << "\n" << ClusterStats( kc ) << "\n";
         kc++;
     }
@@ -66,11 +66,14 @@ std::string KMeans::text()
 void KMeans::Assign()
 {
     myAssigns.clear();
+    for( auto& c : myClusters )
+        c.clear();
+
     for( auto& cl : myLocations )
     {
         //cout << "assigning " << cl.Text() << "\n";
         double m = 1000000000000000000000.0;
-        int sg;
+        int closest_cluster;
         for( int si = 0; si < myClusterCount; si++ )
         {
             //cout << "test cluster " << myClusters[ si ].text() << "\n";
@@ -78,10 +81,11 @@ void KMeans::Assign()
             if( td < m )
             {
                 m = td;
-                sg = si;
+                closest_cluster = si;
             }
         }
-        myAssigns.push_back( sg );
+        myAssigns.push_back( closest_cluster );
+        myClusters[ closest_cluster ].add( cl );
     }
 }
 
@@ -89,13 +93,13 @@ void KMeans::MoveClustersToMean()
 {
     for( int ks = 0; ks < myClusterCount; ks++ )
     {
-        cDataPoint A( myLocations[0].myDim );
+        cDataPoint A( myLocations[0]->myDim );
         int count = 0;
         for( int kl = 0; kl < (int)myLocations.size(); kl++ )
         {
             if( ks == myAssigns[ kl ] )
             {
-                A = A + myLocations[ kl ];
+                A = A + *myLocations[ kl ].get();
                 count++;
             }
         }
@@ -126,7 +130,7 @@ void KMeans::ClusterLocationInitIndex()
     {
         int ic = k * (double)myLocations.size()/myClusterCount;
         //cout << ic <<" "<< myLocations[ic].Text() << ", ";
-        myClusters.push_back( cCluster( myLocations[ic] ) );
+        myClusters.push_back( cCluster( *myLocations[ic].get() ) );
     }
 }
 void KMeans::ClusterLocationInitRandom()
@@ -136,7 +140,7 @@ void KMeans::ClusterLocationInitRandom()
     myClusters.clear();
     for( int k = 0; k < myClusterCount; k++ )
     {
-        myClusters.push_back( myLocations[ rand() % myLocations.size() ] );
+        myClusters.push_back( *myLocations[ rand() % myLocations.size() ].get() );
     }
 }
 
@@ -174,32 +178,32 @@ std::string KMeans::ClusterStats( int cluster )
           boost::accumulators::tag::variance,
           boost::accumulators::tag::count> >
           Accumulator_t;
-    vector< Accumulator_t > vac( myLocations[0].myDim );
+    vector< Accumulator_t > vac( myLocations[0]->myDim );
 
 
     for( int k = 0; k < (int)myLocations.size(); k++ )
     {
         if( cluster == myAssigns[ k ] )
         {
-            for( int kd = 0; kd < (int)myLocations[0].myDim; kd++ )
+            for( int kd = 0; kd < (int)myLocations[0]->myDim; kd++ )
             {
-                vac[ kd ]( myLocations[k].d[kd] );
+                vac[ kd ]( myLocations[k]->d[kd] );
             }
         }
     }
 
     ss << " mins: ";
-    for( int kd = 0; kd < (int)myLocations[0].myDim; kd++ )
+    for( int kd = 0; kd < (int)myLocations[0]->myDim; kd++ )
     {
         ss << boost::accumulators::min( vac[kd] ) << ", ";
     }
     ss << " maxs: ";
-    for( int kd = 0; kd < (int)myLocations[0].myDim; kd++ )
+    for( int kd = 0; kd < (int)myLocations[0]->myDim; kd++ )
     {
         ss << boost::accumulators::max( vac[kd] ) << ", ";
     }
     ss << " sds: ";
-    for( int kd = 0; kd < (int)myLocations[0].myDim; kd++ )
+    for( int kd = 0; kd < (int)myLocations[0]->myDim; kd++ )
     {
         ss << sqrt(boost::accumulators::variance( vac[kd] )) << ", ";
     }
@@ -208,9 +212,15 @@ std::string KMeans::ClusterStats( int cluster )
     return ss.str();
 }
 
-double cCluster::dist( cDataPoint& o )
+std::vector< cCluster >&
+KMeans::clusters()
 {
-    return cDataPoint::dist( myCenter, o );
+    return myClusters;
+}
+
+double cCluster::dist( dp_t o )
+{
+    return cDataPoint::dist( myCenter, *o.get() );
 }
 std::string cCluster::text() const
 {
@@ -223,6 +233,22 @@ void cCluster::move( const cDataPoint& r )
 cCluster::cCluster( const cDataPoint& r )
 {
     myCenter = r;
+}
+void cCluster::clear()
+{
+    myPoints.clear();
+}
+void cCluster::add( dp_t p )
+{
+    myPoints.push_back( p );
+}
+std::vector< dp_t >& cCluster::points()
+{
+    return myPoints;
+}
+cDataPoint& cCluster::center()
+{
+    return myCenter;
 }
 
 
