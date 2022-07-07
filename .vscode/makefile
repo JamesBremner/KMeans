@@ -25,7 +25,10 @@ OBJ_KMeansConsole = \
 	$(ODIR)/KMeansConsole.o \
 	$(ODIR)/KMeans.o \
 	$(ODIR)/cDataPoint.o
-
+OBJ_xyCluster = \
+	$(ODIR)/xyCluster.o \
+	$(ODIR)/KMeans.o \
+	$(ODIR)/cDataPoint.o
 ### COMPILE
 
 $(ODIR)/%.o: %.cpp  
@@ -35,6 +38,11 @@ $(ODIR)/%.o: %.cpp
 KMeansConsole: $(OBJ_KMeansConsole)
 	g++ $(OPT) \
 	-o bin/KMeansConsole.exe $^  \
+	$(static_link_flags) $(LIBS)
+
+xyCluster: $(OBJ_xyCluster)
+	g++ $(OPT) \
+	-o bin/xyCluster.exe $^  \
 	$(static_link_flags) $(LIBS)
 
 .PHONY: clean
