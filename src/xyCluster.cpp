@@ -36,6 +36,7 @@ private:
 
 void cSolution::generate()
 {
+    // scatter datapoints at random throughout a 100 by 100 area
     srand(time(NULL));
     for (int k = 0; k < 30; k++)
     {
@@ -45,6 +46,7 @@ void cSolution::generate()
         myData.push_back(loc);
     }
 
+    // scatter datapoints at random in four clusters of 10 by 10 area
     for (int kc = 0; kc < 4; kc++)
     {
         for (int kp = 0; kp < 40; kp++)
@@ -141,17 +143,13 @@ public:
         mySolution.generate();
         mySolution.findClusters();
 
-        fm.events().draw(
-            [&](PAINTSTRUCT &ps)
-            {
-                    
-                wex::shapes S(ps);
-
-                mySolution.draw(S);
-            });
-
         show();
         run();
+    }
+
+    void draw( wex::shapes& S )
+    {
+        mySolution.draw( S );
     }
 
 private:
