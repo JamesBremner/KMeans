@@ -130,6 +130,9 @@ void KMeans::Init(
     int clusterCount,
     bool frandom)
 {
+    myClusters.clear();
+    myAssigns.clear();
+    
     myClusterCount = clusterCount;
 
     if (myClusterCount > (int)myLocations.size())
@@ -182,7 +185,9 @@ void KMeans::Iter(int max)
 std::string KMeans::ClusterStats(int cluster)
 {
     std::stringstream ss;
-    ss << "Cluster " << cluster << " means ";
+    ss << "Cluster " << cluster 
+        << " contains " << myClusters[cluster].points().size()
+        << " means ";
     if (0 > cluster || cluster > (int)myClusters.size())
         return ss.str();
     ss << myClusters[cluster].text();
