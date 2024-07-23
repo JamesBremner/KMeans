@@ -27,6 +27,11 @@ private:
 class KMeans
 {
 public:
+    void clearData()
+    {
+        myLocations.clear();
+    }
+    
     /// Add a data location
     void Add( const std::vector<double>& p );
     void Add( cDataPoint& p );
